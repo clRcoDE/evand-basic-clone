@@ -25,6 +25,11 @@ const AuthReducer = (state = initialState, { type, payload }) => {
 				auth_loading: false,
 				auth_error: payload.error,
 			}
+		case "LOADING_SWITCH":
+			return {
+				...state,
+				auth_loading: !state.auth_loading,
+			}
 		default:
 			return state
 	}

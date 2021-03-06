@@ -1,62 +1,52 @@
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-
 import axios from "axios"
-import cookie from "react-cookies"
-import { BaseURL } from "../shared/config"
+import { baseUrl } from "../utils/constants"
+import Cookies from "universal-cookie"
 import { toast } from "react-toastify"
-import history from "../shared/BrowserHistory"
+const cookies = new Cookies()
 
-// Default config options
-const defaultOptions = {
-	baseURL: BaseURL,
-	headers: {
-		"Content-Type": "application/json",
-	},
-}
+const METHODS = ["get", "post", "put", "patch", "delete"]
 
-// Create instance
-let instance = axios.create(defaultOptions)
-
-// Set the AUTH token for any request
-instance.interceptors.request.use(function (config) {
-	const token = cookie.load("token")
-	config.headers.Authorization = token ? `Bearer ${token}` : ""
-	return config
-})
-
-instance.interceptors.response.use((response) => response, errorResponseHandler)
-
-function errorResponseHandler(error) {
-	// check for errorHandle config
-	if (
-		error.config.hasOwnProperty("errorHandle") &&
-		error.config.errorHandle === false
-	) {
-		return Promise.reject(error)
+class ApiRequest {
+	constructor() {
+		METHODS.forEach(
+			(method) => (this[method] = this.createRequest.bind(this, method))
+		)
 	}
 
-	if (error.response) {
-		if (
-			error.response.data.code &&
-			error.response.data.code === "token_not_valid"
-		) {
-			toast.error("ورود شما منقضی شده است. لطفا مجددا ورود کنید.")
-			setTimeout(() => {
-				cookie.remove("token", { path: "/" })
-				history.go("/")
-			}, 5000)
+	createRequest(method, api, options = {}) {
+		options.method = method
+		return this.request(api, options).then(this.handleStatus)
+	}
+
+	request(api, { data = null, ...options } = {}) {
+		const reqOptions = options
+		reqOptions.headers = reqOptions?.headers || {}
+		reqOptions.headers["Accept"] = "application/json"
+		reqOptions.headers["token"] = `${cookies.get("user")}`
+
+		const AXIOS = axios.create({
+			baseURL: baseUrl,
+			headers: reqOptions.headers,
+			validateStatus: () => true,
+		})
+		console.log(`\x1b[32m${path}\x1b[0m`)
+		return AXIOS[options.method](baseUrl + api, data)
+	}
+
+	handleStatus(response) {
+		if (response?.status >= 200 && response?.status < 300) {
+			if (response?.data?.setting?.success === "2") {
+				cookies.remove("user")
+				cookies.remove("userInfo")
+				return router.push("/login")
+			}
+			if (response?.data?.setting?.success === "3") {
+				toast.error("شما اجازه دسترسی به این سرویس را ندارید")
+			}
+			return { responseData: response.data }
 		}
+		return Promise.reject(response)
 	}
 }
 
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
+export default new ApiRequest()

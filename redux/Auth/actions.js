@@ -1,5 +1,5 @@
 import { auth_types } from "../types"
-import { Api } from "../../utils/api"
+import ApiRequest from "../../utils/api"
 
 const authenticationRequest = () => ({ type: auth_types.AUTH_REQUEST })
 
@@ -12,20 +12,25 @@ const authenticationFailure = (error) => ({
 	payload: error,
 })
 
+export const loadingswitch = () => ({
+	type: "LOADING_SWITCH",
+})
+
 export const authenticate = (
 	username,
 	password,
 	successCallback,
 	failureCallback
 ) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 		try {
 			dispatch(authenticationRequest())
 			const data = {
 				username,
 				password,
 			}
-			Api.post(data)
+			const url = "/login"
+			ApiRequest.post(url, data)
 				.then((result) => {
 					dispatch(authenticationSuccess(result))
 					successCallback && successCallback(result)
