@@ -1,0 +1,13 @@
+const auth_types = {
+	AUTH_SUCCESS: "AUTH_SUCCESS",
+	AUTH_REQUEST: "AUTH_REQUEST",
+	AUTH_FAILED: "AUTH_FAILED",
+}
+
+const events_types = {
+	GET_EVENTS_REQUEST: "GET_EVENTS_REQUEST",
+	GET_EVENTS_SUCCESS: "GET_EVENTS_SUCCESS",
+	GET_EVENTS_FAILED: "GET_EVENTS_FAILED",
+}
+
+export { auth_types, events_types }
