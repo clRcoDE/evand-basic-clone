@@ -1,0 +1,20 @@
+@import "../../../styles/variables.scss";
+
+.eventItemContainer {
+	// display: flex;
+	// flex-direction: row;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	box-shadow: $packShadow;
+	margin: 0 12px 25px 12px;
+	border-radius: $primaryBorderRadius;
+	overflow: hidden;
+	width: 80%;
+	&:hover {
+		cursor: pointer;
+	}
+	&:focus {
+	}
+}

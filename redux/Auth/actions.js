@@ -12,10 +12,6 @@ const authenticationFailure = (error) => ({
 	payload: error,
 })
 
-export const loadingswitch = () => ({
-	type: "LOADING_SWITCH",
-})
-
 export const authenticate = (
 	username,
 	password,
@@ -26,14 +22,14 @@ export const authenticate = (
 		try {
 			dispatch(authenticationRequest())
 			const data = {
-				username,
+				email,
 				password,
 			}
 			const url = "/login"
 			ApiRequest.post(url, data)
-				.then((result) => {
-					dispatch(authenticationSuccess(result))
-					successCallback && successCallback(result)
+				.then(({ responseData }) => {
+					dispatch(authenticationSuccess(responseData.result))
+					successCallback && successCallback(responseData.result)
 				})
 				.catch((error) => {
 					dispatch(authenticationFailure(error))
@@ -45,3 +41,7 @@ export const authenticate = (
 		}
 	}
 }
+
+export const showLogin = () => ({
+	type: auth_types.SHOW_LOGIN,
+})

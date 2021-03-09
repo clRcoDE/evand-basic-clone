@@ -2742,6 +2742,11 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.7.tgz#e9c18a410e5ed7e12442a549fbd8afa767038d65"
   integrity sha512-U+MTEOO0AiDzxwFvoa4JVnMV6mZlJKk2sBLt90s7G0Gd0Mlknc7kxEn3nuDPNZRta7O2uy8oLcZLVT+4sqNZHQ==
 
+spinners-react@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/spinners-react/-/spinners-react-1.0.4.tgz#728444f1e96b3ce7470709ecbfb0f9681819ed0b"
+  integrity sha512-8I6vGcsGTtv0raS3T4zT+XzgHi2y4uBb9TlgpAKia+gZ9BIt9/+za5mOtQOz8yM8wv9lap75UMc57ys17cO1ag==
+
 sshpk@^1.7.0:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.16.1.tgz#fb661c0bef29b39db40769ee39fa70093d6f6877"

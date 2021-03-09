@@ -10,8 +10,8 @@ const StyledButton = styled(Button)`
 		${(props) => props.extrastyles}
 	}
 `
-const CustomeButton = ({ children, ...otherprops }) => {
+const CustomButton = ({ children, ...otherprops }) => {
 	return <StyledButton {...otherprops}>{children}</StyledButton>
 }
 
-export { CustomeButton }
+export { CustomButton }

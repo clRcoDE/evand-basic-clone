@@ -1,5 +1,5 @@
 import axios from "axios"
-import { baseUrl } from "../utils/constants"
+import { BASE_URL } from "../utils/constants"
 import Cookies from "universal-cookie"
 import { toast } from "react-toastify"
 const cookies = new Cookies()
@@ -23,14 +23,24 @@ class ApiRequest {
 		reqOptions.headers = reqOptions?.headers || {}
 		reqOptions.headers["Accept"] = "application/json"
 		reqOptions.headers["token"] = `${cookies.get("user")}`
+		reqOptions.headers["Access-Control-Allow-Origin"] = "*"
+		reqOptions.headers["Access-Control-Allow-Methods"] =
+			"DELETE, POST, GET, OPTIONS"
+		reqOptions.headers["Access-Control-Allow-Headers"] =
+			"Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+
+		reqOptions.headers["Content-Type"] = "text/event-stream"
+		reqOptions.headers["Cache-Control"] = "no-cache"
+		reqOptions.headers["Connection"] = "keep-alive"
+		reqOptions.headers["X-Accel-Buffering"] = "no"
 
 		const AXIOS = axios.create({
-			baseURL: baseUrl,
+			baseURL: BASE_URL,
 			headers: reqOptions.headers,
 			validateStatus: () => true,
 		})
-		console.log(`\x1b[32m${path}\x1b[0m`)
-		return AXIOS[options.method](baseUrl + api, data)
+		console.log(`\x1b[32m${api}\x1b[0m`)
+		return AXIOS[options.method](BASE_URL + api, data)
 	}
 
 	handleStatus(response) {

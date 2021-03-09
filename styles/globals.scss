@@ -1,16 +1,99 @@
+@import "./variables.scss";
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0 auto;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	background: #fff;
+}
+body {
+	width: 80%;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}
+
+button {
+	margin: 0;
+	padding: 0;
+	border: none;
+	text-decoration: none;
+	outline: none;
+
+	:focus {
+		outline: none;
+	}
+}
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+}
+@mixin centeredFlex($dir) {
+	display: flex;
+	flex-direction: $dir;
+	align-items: center;
+	justify-content: center;
+}
+
+.wrapper {
+	padding: 25px 100px 50px 25px;
+	// direction: rtl;
+}
+.listWrapper {
+	@include centeredFlex(column);
+}
+.mainContainer {
+	border: 3px solid $deepDark;
+}
+
+.eventContainer {
+	overflow: hidden;
+	border-radius: $primaryBorderRadius;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 6px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+	overflow: hidden;
+	padding-bottom: 30px;
+}
+.loginFormWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+.loginSubmitWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 25px;
+}
+.loginBox {
+	border: 2px solid $royalbluedark;
+	padding: 30px;
+}
+
+.descriptionWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.spinnerWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 70vh;
+	width: 100%;
 }

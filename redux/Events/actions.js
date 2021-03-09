@@ -16,22 +16,18 @@ export const getEvents = (successCallback, failureCallback) => {
 	return async (dispatch, getState) => {
 		try {
 			dispatch(getEventsRequest())
-			const { token } = getState()
-			const data = {
-				token,
-			}
-			const url = "/login"
-			Api.get(url, data)
-				.then((result) => {
-					dispatch(getEventsSuccess(result))
-					successCallback && successCallback(result)
+			const url = "/events"
+			ApiRequest.get(url)
+				.then(({ responseData }) => {
+					dispatch(getEventsSuccess(responseData.data))
+					successCallback && successCallback(responseData.data)
 				})
-				.catch((error) => {
-					dispatch(getEventsFailure(error))
-					failureCallback && failureCallback(error)
+				.catch(({ responseData }) => {
+					responseData && dispatch(getEventsFailure(responseData.error))
+					failureCallback && failureCallback(responseData.error)
 				})
 		} catch (error) {
-			dispatch(authenticationFailure(error))
+			dispatch(getEventsFailure(error))
 			failureCallback && failureCallback(error)
 		}
 	}

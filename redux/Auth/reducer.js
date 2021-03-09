@@ -3,7 +3,9 @@ import { auth_types } from "../types"
 const initialState = {
 	token: null,
 	auth_loading: false,
+	profile: null,
 	auth_error: null,
+	showLogin: false,
 }
 
 const AuthReducer = (state = initialState, { type, payload }) => {
@@ -18,17 +20,13 @@ const AuthReducer = (state = initialState, { type, payload }) => {
 				...state,
 				auth_loading: false,
 				token: payload.token,
+				profile: payload.profile,
 			}
 		case auth_types.AUTH_FAILED:
 			return {
 				...state,
 				auth_loading: false,
 				auth_error: payload.error,
-			}
-		case "LOADING_SWITCH":
-			return {
-				...state,
-				auth_loading: !state.auth_loading,
 			}
 		default:
 			return state

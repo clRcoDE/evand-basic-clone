@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField"
 
 const StyledTextInput = styled(TextField)`
 	&& {
+		direction: rtl;
 		${(props) => props.extrastyles}
 	}
 `
